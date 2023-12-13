@@ -1,0 +1,109 @@
+div {
+  margin: 20px;
+}
+
+
+nav div ul li, a{
+padding: 0 5px;
+text-decoration: none;
+}
+
+
+table {
+width:100%;
+border-collapse: collapse;
+}
+table > tr{
+margin:50px;
+}
+table th {
+background-color: #f2f2f2;
+padding: 12px;
+text-align: left;	
+
+}
+table td {
+border: 1px solid #ddd;
+padding: 12px;
+width:100%;
+}
+table > tr:nth-child(even){
+background-color: #f9f9f9;
+
+}
+
+
+article {
+  margin: 20px;
+}
+h1, h2, h3 {
+  color: navy;
+}
+p {
+  margin: 10px 0;
+}
+code {
+  background-color: lightgray;
+  padding: 5px;
+}
+pre {
+  background-color: lightgray;
+  padding: 10px;
+  overflow: auto;
+}
+ol {
+  margin-left: 20px;
+}
+section {
+  margin-bottom: 20px;
+}
+section:last-child {
+  margin-bottom: 0;
+}
+pre code {
+  white-space: pre;
+}
+
+
+footer {
+background-color: #343a40;
+text-align: center;
+display: flex;
+justify-content: center;
+align-items: center;
+height: auto;
+}
+footer p {
+color: white;
+}
+
+main ul li button {
+margin: 2.5px;
+}
+
+.container-center {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+}
+
+
+.paragraph-box {
+text-align: center;
+background-color: lightgray;
+padding: 20px;
+margin: 10px;
+}
+
+
+div.lista, div.aggiungi{
+background-color: lightgray;
+padding: 5px;
+margin:0;
+}
+
+
+div.lista{
+margin: 0 0 15px 0;
+}
