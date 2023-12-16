@@ -3,12 +3,11 @@
     <h1>Noleggio film</h1>
   </header>
   <nav>
-      <ul><router-link to="/">Noleggi</router-link></ul>
-      <ul><router-link to="/film">Film</router-link></ul>
-      <ul><router-link to="/registi">Registi</router-link></ul>
+    <router-link to="/main/film">Film</router-link>
+    <router-link to="/main/noleggio">Noleggio</router-link>
   </nav>
   <main>
-    <router-view />
+    <router-view></router-view>
   </main>
   <footer>
     <p>Progetto di Proietti Martina e Alessandro Pretolani</p>
