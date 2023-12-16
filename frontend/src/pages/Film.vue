@@ -22,7 +22,6 @@ export default defineComponent({
 </script>
 
 <template>
-  <h2>Film</h2>
   <section>
     <table v-if="datiFilm != null">
       <tr>
