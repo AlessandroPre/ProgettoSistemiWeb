@@ -4,6 +4,10 @@ import filmRouter from "./routes/film-router"
 import registiRouter from "./routes/registi-router"
 import noleggiRouter from "./routes/noleggi-router"
 import history from "connect-history-api-fallback"
+//parte di autenticazione
+import bodyParser from "body-parser"
+import cookieParser from "cookie-parser"
+import authRouter from "./routes/auth-router"
 
 const app: Express = express()
 const port: number = 3000
@@ -16,6 +20,12 @@ app.use(cors())
 app.use(filmRouter)
 app.use(registiRouter)
 app.use(noleggiRouter)
+
+//autenticazione
+app.use(bodyParser.json())
+app.use(cookieParser())
+app.use(authRouter)
+
 
 app.use(function(req, res, next) {
   res.setHeader("Content-Type", "text/plain")
