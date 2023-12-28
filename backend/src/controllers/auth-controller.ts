@@ -16,7 +16,7 @@ export const register = async (req: Request, res: Response) => {
 
   // Verifica che l'username sia disponibile
   const connection = await getConnection()
-  const [users] = await connection.execute("SELECT username FROM users WHERE username=?", [
+  const users = await connection.execute("SELECT username FROM users WHERE username=?", [
     username,
   ])
   if (Array.isArray(users) && users.length > 0) {
@@ -34,7 +34,7 @@ export const register = async (req: Request, res: Response) => {
   ])
 
   // Estrae i dati per il nuovo utente
-  const [results] = await connection.execute(
+  const results = await connection.execute(
     "SELECT id, username, role FROM users WHERE username=?",
     [username]
   )
@@ -59,7 +59,7 @@ export const login = async (req: Request, res: Response) => {
 
   // Esegue la query al database per ottenere i dati dell'utente in base allo username
   const connection = await getConnection()
-  const [results] = await connection.execute(
+  const results = await connection.execute(
     "SELECT id, username, password, role FROM users WHERE username=?",
     [username]
   )

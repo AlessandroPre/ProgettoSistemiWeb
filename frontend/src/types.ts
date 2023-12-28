@@ -3,6 +3,7 @@ export interface Film {
     id_regista: number
     titolo: string
     genere: string
+    idGestore: number
 }
 
 export interface Registi {
@@ -17,3 +18,10 @@ export interface Noleggi {
     datanoleggio: Date
     id_film: Film["idfilm"]
 }
+
+export interface User {
+    id: number
+    username: string
+    role: "admin" | "user"
+  }
+  

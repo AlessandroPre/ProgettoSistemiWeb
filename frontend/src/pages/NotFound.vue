@@ -1,13 +1,12 @@
-<template>
-  <h3>404</h3>
-  <h2>Pagina non trovata</h2>
-</template>
+<script lang="ts">
+import { defineComponent } from "vue"
 
-<style scoped>
-h3 {
-  text-align: center;
-  font-size: 4rem;
-  color: #999;
-  margin: 2rem;
-}
-</style>
+export default defineComponent({})
+</script>
+
+<template>
+  <div class="prose">
+    <h1>Pagina non trovata</h1>
+    <RouterLink to="/" class="not-prose btn">Torna alla home</RouterLink>
+  </div>
+</template>

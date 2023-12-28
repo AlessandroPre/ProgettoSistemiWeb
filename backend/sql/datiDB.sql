@@ -1,29 +1,41 @@
-INSERT INTO mioDB.registi (nome, datanascita, origine) VALUES 
-('Federico Fellini', '1920-01-20', 'Rimini'),
-('Sergio Leone', '1929-01-03', 'Roma'),
-('Luchino Visconti', '1906-11-02', 'Milano'),
-('Michelangelo Antonini', '1912-09-29', 'Ferrara');
+INSERT INTO registi (nome, datanascita, origine)
+VALUES
+('Steven Spielberg', '1946-12-18', 'USA'),
+('Christopher Nolan', '1970-07-30', 'UK'),
+('Quentin Tarantino', '1963-03-27', 'USA'),
+('Martin Scorsese', '1942-11-17', 'USA'),
+('Sofia Coppola', '1971-05-14', 'USA');
 
-INSERT INTO mioDB.film (idfilm, id_regista, titolo, genere) VALUES 
-(1, 1, 'La strada', 'Drammatico'), 
-(2, 1, 'Amarcord', 'Commedia'), 
-(3, 1, 'Otto e mezzo', 'Fantasia'), 
-(4, 2, 'Il colosso di Rodi', 'Peplum'), 
-(5, 2, 'Per un pugno di dollari', 'Western'), 
-(6, 2, 'giù la testa', 'Western'), 
-(7, 3, 'Bellissima', 'Dramma'), 
-(8, 3, 'Senso', 'Storico'), 
-(9, 3, 'Morte a Venezia', 'Dramma'), 
-(10, 4, 'Cronaca di un amore', 'Dramma'), 
-(11, 4, 'Blow-up', 'Thriller psicologico'), 
-(12, 4, 'Deserto rosso', 'Dramma');
+INSERT INTO users (username, password, role)
+VALUES
+('admin', '123456', 'admin'),
+('user1', 'password1', 'user'),
+('user2', 'password2', 'user'),
+('user3', 'password3', 'user'),
+('user4', 'password4', 'user');
 
-INSERT INTO mioDB.noleggi (idnoleggio, datanoleggio, id_film) VALUES 
-(1,'2022-06-18', 1), 
-(2,'2023-05-09', 5), 
-(3,'2020-11-21', 11), 
-(4,'2021-08-03', 10), 
-(5,'2022-03-14', 12), 
-(6,'2023-10-26', 3), 
-(7,'2020-05-28', 9), 
-(8,'2022-12-20', 11);
+INSERT INTO film (id_regista, titolo, genere, idGestore)
+VALUES
+(1, 'Jurassic Park', 'Avventura', 1),
+(1, 'Schindler List', 'Drammatico', 2),
+(2, 'Inception', 'Fantascienza', 3),
+(2, 'The Dark Knight', 'Azione', 4),
+(3, 'Pulp Fiction', 'Crime', 5),
+(3, 'Kill Bill', 'Azione', 1),
+(4, 'The Departed', 'Crime', 2),
+(4, 'The Wolf of Wall Street', 'Commedia', 3),
+(5, 'Lost in Translation', 'Commedia', 4),
+(5, 'The Virgin Suicides', 'Drammatico', 5);
+
+INSERT INTO noleggi (datanoleggio, id_film)
+VALUES
+('2023-01-01', 1),
+('2023-01-02', 2),
+('2023-01-03', 3),
+('2023-01-04', 4),
+('2023-01-05', 5),
+('2023-01-06', 6),
+('2023-01-07', 7),
+('2023-01-08', 8),
+('2023-01-09', 9),
+('2023-01-10', 10);

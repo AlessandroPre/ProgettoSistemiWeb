@@ -1,45 +1,51 @@
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import axios from "axios";
+import axios from "axios"
+import { defineComponent } from "vue"
 
 export default defineComponent({
   data() {
     return {
       username: "",
       password: "",
-      error: ""
     }
   },
   methods: {
-    login(){
-      axios.post("/api/login", {username: this.username, password: this.password})
-      .then(response => {
-        localStorage.setItem("token", response.data.token)
-        this.$router.push("/main")
-      })
-      .catch(error => {
-        this.error = error.response.data.message
-      })
-    }
-  }
+    async onSubmit() {
+      try {
+        await axios.post("/api/auth/login", {
+          username: this.username,
+          password: this.password,
+        })
+        window.location.href = "/"
+      } catch (e: any) {
+        if (e.response) {
+          alert(`${e.response.status} - ${e.response.statusText}\n${e.response.data}`)
+        } else {
+          alert(e.message)
+        }
+      }
+    },
+  },
 })
 </script>
-<template> 
-  <h2>Login</h2> 
-  <form @submit.prevent="login"> 
-    <div> 
-      <label for=“username”>Username</label> 
-      <input id=“username” v-model="username" type=“text” required> 
-    </div> 
-    <div> 
-      <label for=“password”>Password</label> 
-      <input id=“password” v-model="password" type=“password” required> 
-    </div>
-    <div> 
-      <button type="submit">Accedi</button> 
-    </div> 
-    <div v-if="error"> 
-      <p>{{error}}</p> 
-    </div> 
-  </form>
+
+<template>
+  <div class="prose">
+    <h1>Login</h1>
+    <form class="not-prose flex flex-col gap-3" @submit.prevent="onSubmit">
+      <input
+        type="text"
+        v-model="username"
+        class="rounded-lg border-slate-200"
+        placeholder="Username"
+      />
+      <input
+        type="password"
+        v-model="password"
+        class="rounded-lg border-slate-200"
+        placeholder="Password"
+      />
+      <button type="submit" class="btn !bg-blue-500 text-white w-1/2 mx-auto mt-3">Accedi</button>
+    </form>
+  </div>
 </template>
