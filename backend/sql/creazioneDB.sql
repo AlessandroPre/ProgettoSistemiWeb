@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `mioDB`.`film` (
   INDEX `fk_film_registi_idx` (`id_regista` ASC),
   CONSTRAINT `fk_film_registi`
     FOREIGN KEY (`id_regista`)
-    REFERENCES `mioDB`.`registi` (`idregista`)
+    REFERENCES `mioDB`.`registi` (`idregista`),
     FOREIGN KEY (`idGestore`)
     REFERENCES `mioDB`.`users` (`idUser`)
     ON DELETE NO ACTION
