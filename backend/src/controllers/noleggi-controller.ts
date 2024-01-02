@@ -1,8 +1,11 @@
 import { Request, Response } from "express"
-import { connection } from "../utils/db"
+// Importa getConnection invece di connection
+import { getConnection } from "../utils/db"
 
 export async function allRental(req: Request, res: Response) {
-  connection.execute(
+  // Usa getConnection per ottenere la connessione al database
+  const conn = await getConnection()
+  conn.execute(
     `SELECT *
     FROM noleggi`,
     [],
@@ -13,7 +16,9 @@ export async function allRental(req: Request, res: Response) {
 }
 
 export async function rentalFromID(req: Request, res: Response) {
-  connection.execute(
+  // Usa getConnection per ottenere la connessione al database
+  const conn = await getConnection()
+  conn.execute(
     `SELECT *
     FROM noleggi
     WHERE idnoleggio=?`,
@@ -25,7 +30,9 @@ export async function rentalFromID(req: Request, res: Response) {
 }
 
 export async function rentalFromDate(req: Request, res: Response) {
-  connection.execute(
+  // Usa getConnection per ottenere la connessione al database
+  const conn = await getConnection()
+  conn.execute(
     `SELECT *
     FROM noleggi
     WHERE datanoleggio=?`,
@@ -37,7 +44,9 @@ export async function rentalFromDate(req: Request, res: Response) {
 }
 
 export async function FilmHasRental(req: Request, res: Response) {
-  connection.execute(
+  // Usa getConnection per ottenere la connessione al database
+  const conn = await getConnection()
+  conn.execute(
     `SELECT f.titolo, n.datanoleggio
     FROM film f JOIN noleggi n ON f.idfilm = n.id_film;`,
     [],
