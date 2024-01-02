@@ -1,8 +1,11 @@
 import { Request, Response } from "express"
-import { connection } from "../utils/db"
+// Importa getConnection invece di connection
+import { getConnection } from "../utils/db"
 
 export async function allDirector(req: Request, res: Response) {
-  connection.execute(
+  // Usa getConnection per ottenere la connessione al database
+  const conn = await getConnection()
+  conn.execute(
     `SELECT *
     FROM registi`,
     [],
@@ -13,7 +16,9 @@ export async function allDirector(req: Request, res: Response) {
 }
 
 export async function filmFromDirector(req: Request, res: Response) {
-  connection.execute(
+  // Usa getConnection per ottenere la connessione al database
+  const conn = await getConnection()
+  conn.execute(
     `SELECT r.nome AS nome_regista, f.titolo AS titolo_film 
     FROM registi r JOIN film f ON r.idregista = f.id_regista 
     GROUP BY r.nome, f.titolo ORDER BY r.nome;`,
