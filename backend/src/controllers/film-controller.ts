@@ -4,10 +4,13 @@ import { getConnection } from "../utils/db"
 import { decodeAccessToken } from "../utils/auth"
 
 export async function allFilms(req: Request, res: Response) {
+  // Se req.query.idfilm è undefined, usa null altrimenti usa il valore di req.query.idfilm
+  const idfilm = req.query.idfilm === undefined ? null : req.query.idfilm as string;
   connection.execute(
     `SELECT *
-    FROM film`,
-    [req.query.idfilm as string], // Specifica il tipo di req.query.idfilm come string
+    FROM film
+    WHERE idfilm=?`, // Aggiungi la condizione WHERE idfilm=?
+    [idfilm], // Usa la variabile idfilm come parametro
     function(err, results, fields) {
       res.json(results)
     }
