@@ -1,12 +1,13 @@
 import { Request, Response } from "express"
-import { connection } from "../utils/db"
 import { getConnection } from "../utils/db"
 import { decodeAccessToken } from "../utils/auth"
 
 export async function allFilms(req: Request, res: Response) {
   // Se req.query.idfilm è undefined, usa null altrimenti usa il valore di req.query.idfilm
   const idfilm = req.query.idfilm === undefined ? null : req.query.idfilm as string;
-  connection.execute(
+  // Usa la funzione getConnection per ottenere la connessione al database
+  const conn = await getConnection()
+  conn.execute(
     `SELECT *
     FROM film
     WHERE idfilm=?`, // Aggiungi la condizione WHERE idfilm=?
@@ -18,7 +19,9 @@ export async function allFilms(req: Request, res: Response) {
 }
 
 export async function filmFromGenre(req: Request, res: Response) {
-  connection.execute(
+  // Usa la funzione getConnection per ottenere la connessione al database
+  const conn = await getConnection()
+  conn.execute(
     `SELECT film.titolo, film.genere
     FROM film
     WHERE film.genere=?`,
@@ -38,15 +41,22 @@ export const addFilm = async (req: Request, res: Response) => {
     return
   }
 
+  // Usa la funzione getConnection per ottenere la connessione al database
   const conn = await getConnection()
-  await conn.execute("INSERT INTO film (idfilm, id_regista, titolo, genere, idGestore) VALUES (?, ?, ?, ?, ?)", [ // Aggiungi il parametro idGestore nella query
-    req.body.idfilm,
-    req.body.id_regista,
-    req.body.titolo,
-    req.body.genere,
-    req.body.idGestore
-  ]) // Usa await prima di conn.execute
-  res.json({ success: true })
+  // Usa try-catch per gestire gli errori
+  try {
+    await conn.execute("INSERT INTO film (idfilm, id_regista, titolo, genere, idGestore) VALUES (?, ?, ?, ?, ?)", [ // Aggiungi il parametro idGestore nella query
+      req.body.idfilm,
+      req.body.id_regista,
+      req.body.titolo,
+      req.body.genere,
+      req.body.idGestore
+    ]) // Usa await prima di conn.execute
+    res.json({ success: true })
+  } catch (err) {
+    // Invia un messaggio di errore appropriato
+    res.status(500).send("Errore nell'inserimento del film.")
+  }
 }
 
 export const deleteFilm = async (req: Request, res: Response) => {
@@ -57,20 +67,27 @@ export const deleteFilm = async (req: Request, res: Response) => {
     return
   }
 
+  // Usa la funzione getConnection per ottenere la connessione al database
   const conn = await getConnection()
-  // Verifica che il film esista
-  const film = await conn.execute("SELECT * FROM film WHERE idfilm=?", [req.params.idfilm]) // Usa await prima di conn.execute
-  if (!Array.isArray(film) || film.length == 0) {
-    res.status(404).send("film non trovato.")
-    return
-  }
-  // Verifica che l'utente abbia i permessi per eliminare il post
-  const PermissionFilm = film[0] as any // Usa un nome diverso per la variabile o usa la stessa variabile senza dichiararla di nuovo
-  if (PermissionFilm.idfilm != user.id && user.role != "admin") {
-    res.status(403).send("Non hai i permessi per eliminare questo film.")
-    return
-  }
+  // Usa try-catch per gestire gli errori
+  try {
+    // Verifica che il film esista
+    const film = await conn.execute("SELECT * FROM film WHERE idfilm=?", [req.params.idfilm]) // Usa await prima di conn.execute
+    if (!Array.isArray(film) || film.length == 0) {
+      res.status(404).send("film non trovato.")
+      return
+    }
+    // Verifica che l'utente abbia i permessi per eliminare il post
+    const filmData = film[0] as any // Usa un nome diverso per la variabile o usa la stessa variabile senza dichiararla di nuovo
+    if (filmData.idfilm != user.id && user.role != "admin") {
+      res.status(403).send("Non hai i permessi per eliminare questo film.")
+      return
+    }
 
-  await conn.execute("DELETE FROM film WHERE idfilm=?", [req.params.idfilm]) // Usa await prima di conn.execute
-  res.json({ success: true })
+    await conn.execute("DELETE FROM film WHERE idfilm=?", [req.params.idfilm]) // Usa await prima di conn.execute
+    res.json({ success: true })
+  } catch (err) {
+    // Invia un messaggio di errore appropriato
+    res.status(500).send("Errore nell'eliminazione del film.")
+  }
 }
