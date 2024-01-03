@@ -16,9 +16,8 @@ export const register = async (req: Request, res: Response) => {
 
   // Verifica che l'username sia disponibile
   const connection = await getConnection()
-  const [users] = await connection.execute("SELECT username FROM users WHERE username=?", [
-    username,
-  ])
+  const [users] = await connection.execute("SELECT username FROM users WHERE username=?", [username])
+  
   if (Array.isArray(users) && users.length > 0) {
     res.status(400).send("Username già in uso.")
     return
@@ -28,16 +27,15 @@ export const register = async (req: Request, res: Response) => {
   const passwordHash = await bcrypt.hash(password, 10)
 
   // Inserisce l'utente nel database
-  await connection.execute("INSERT INTO users (username, password) VALUES (?, ?)", [
-    username,
-    passwordHash,
-  ])
+  await connection.execute(
+    "INSERT INTO users (username, password) VALUES (?, ?)",
+    [username,passwordHash]
+    )
 
   // Estrae i dati per il nuovo utente
   const [results] = await connection.execute(
-    "SELECT id, username, role FROM users WHERE username=?",
-    [username]
-  )
+    "SELECT id, username, role FROM users WHERE username=?", [username]
+    )
   const newUser = (results as any)[0]
 
   // Crea un JWT contenente i dati dell'utente e lo imposta come cookie
