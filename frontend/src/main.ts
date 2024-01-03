@@ -7,11 +7,13 @@ import Login from "./pages/Login.vue"
 import Noleggi from "./pages/Noleggi.vue"
 import Main from './pages/Main.vue'
 import NotFound from "./pages/NotFound.vue"
+import Register from "./pages/Register.vue"
 
 const router: Router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", component: Login },
+    { path: "/registrati", component: Register},
     { path: "/main", component: Main },
     { path: "/main/film", component: Film },
     { path: "/main/noleggio", component: Noleggi },

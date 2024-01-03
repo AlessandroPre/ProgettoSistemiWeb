@@ -23,6 +23,7 @@ export const setAccessToken = (req: Request, res: Response, user: any) => {
     maxAge: 86400000, // 1 giorno in millisecondi --> durata access token
     httpOnly: true,
     sameSite: true
+    //secure: true
   })
 }
 
