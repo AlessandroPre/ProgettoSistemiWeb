@@ -9,9 +9,10 @@ USE `mioDB` ;
 CREATE TABLE IF NOT EXISTS `mioDB`.`registi` (
   `idregista` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
-  `datanascita` DATE NOT NULL,
+  `datanascita` VARCHAR(20) NOT NULL,
   `origine` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`idregista`))
+  PRIMARY KEY (`idregista`)
+)
 ENGINE = InnoDB;
 
 /*autenticazione*/
@@ -24,34 +25,34 @@ CREATE TABLE IF NOT EXISTS `mioDB`.`users` (
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `mioDB`.`film` (
-  `idfilm` INT NOT NULL AUTO_INCREMENT,
+  `idfilm` INT NOT NULL,
   `id_regista` INT NOT NULL,
   `titolo` VARCHAR(512) NOT NULL,
   `genere` VARCHAR(45) NOT NULL,
-  `idGestore` INT NOT NULL,
   PRIMARY KEY (`idfilm`),
   INDEX `fk_film_registi_idx` (`id_regista` ASC),
   CONSTRAINT `fk_film_registi`
     FOREIGN KEY (`id_regista`)
-    REFERENCES `mioDB`.`registi` (`idregista`),
-  CONSTRAINT `fk_film_users`
-    FOREIGN KEY (`idGestore`)
-    REFERENCES `mioDB`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `mioDB`.`registi` (`idregista`)
+)
 ENGINE = InnoDB;
 
 
 CREATE TABLE IF NOT EXISTS `mioDB`.`noleggi` (
   `idnoleggio` INT NOT NULL AUTO_INCREMENT,
-  `datanoleggio` DATE NOT NULL,
+  `datanoleggio` VARCHAR(20) NOT NULL,
   `id_film` INT NOT NULL,
+  `noleggiatore` INT NOT NULL,
   PRIMARY KEY (`idnoleggio`),
   CONSTRAINT `fk_noleggi_film`
     FOREIGN KEY (`id_film`)
     REFERENCES `mioDB`.`film` (`idfilm`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_noleggi_users`
+    FOREIGN KEY (`noleggiatore`)
+    REFERENCES `mioDB`.`users` (`id`)
+)
 ENGINE = InnoDB;
 
 
