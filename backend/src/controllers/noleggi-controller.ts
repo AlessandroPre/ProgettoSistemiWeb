@@ -1,57 +1,47 @@
 import { Request, Response } from "express"
-// Importa getConnection invece di connection
 import { getConnection } from "../utils/db"
 
-export async function allRental(req: Request, res: Response) {
-  // Usa getConnection per ottenere la connessione al database
+
+export const allRental = async (req: Request, res: Response) => {
   const conn = await getConnection()
-  conn.execute(
+  const [rentals] = await conn.execute(
     `SELECT *
-    FROM noleggi`,
-    [],
-    function(err, results, fields) {
-      res.json(results)
-    }
+    FROM noleggi`
   )
+  res.json(rentals)
 }
 
-export async function rentalFromID(req: Request, res: Response) {
-  // Usa getConnection per ottenere la connessione al database
+export const allFilm = async (req: Request, res: Response) => {
   const conn = await getConnection()
-  conn.execute(
+  const [film] = await conn.execute(
     `SELECT *
-    FROM noleggi
-    WHERE idnoleggio=?`,
-    [req.params.idnoleggio],
-    function(err, results, fields) {
-      res.json(results)
-    }
+    FROM film`
   )
+  res.json(film)
 }
 
-export async function rentalFromDate(req: Request, res: Response) {
-  // Usa getConnection per ottenere la connessione al database
-  const conn = await getConnection()
-  conn.execute(
-    `SELECT *
-    FROM noleggi
-    WHERE datanoleggio=?`,
-    [req.params.datanoleggio],
-    function(err, results, fields) {
-      res.json(results)
-    }
-  )
+
+export const addRental = async (req: Request, res: Response) => {
+  const conn = await getConnection();
+  await conn.execute("INSERT INTO noleggi (datanoleggio, id_film, noleggiatore) VALUES (?, ?, ?)", 
+  [ req.body.datanoleggio, req.body.id_film, req.body.noleggiatore ]);
+  res.json({ success: true }
+  ) 
 }
 
-export async function FilmHasRental(req: Request, res: Response) {
-  // Usa getConnection per ottenere la connessione al database
+
+export const deleteRental = async (req: Request, res: Response) => {
   const conn = await getConnection()
-  conn.execute(
-    `SELECT f.titolo, n.datanoleggio
-    FROM film f JOIN noleggi n ON f.idfilm = n.id_film;`,
-    [],
-    function(err, results, fields) {
-      res.json(results)
-    }
-  )
+  await conn.execute("DELETE FROM noleggi WHERE idnoleggio=?", [req.params.idnoleggio])
+  res.json({ success: true })
 }
+
+
+export const updateRental = async (req: Request, res: Response) => {
+  const conn = await getConnection();
+  await conn.execute(
+    "UPDATE noleggi SET datanoleggio = ? WHERE idnoleggio = ?",
+    [req.body.datanoleggio, req.params.idnoleggio]
+  );
+  res.json({ success: true });
+}; 
