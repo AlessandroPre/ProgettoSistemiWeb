@@ -1,7 +1,98 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-.btn {
-  @apply text-sm font-semibold px-4 py-2 bg-slate-200 rounded-lg;
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f3f3f3;
+  }
+
+  header a {
+    text-decoration: none;
+  }
+
+  main {
+    padding: 1rem;
+    border-top: 1px solid #ccc;
+    margin: 0 1rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+
+  th,
+  td {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  .prose {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .gap-3 > * + * {
+    margin-top: 1rem;
+  }
+
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+
+  .border-slate-200 {
+    border: 1px solid #ccc;
+  }
+
+  .w-1, .w-2 {
+    width: 50%;
+  }
+
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .mt-3 {
+    margin-top: 1rem;
+  }
+
+  .text-white {
+    color: white;
+  }
+
+  .bg-blue-500 {
+    background-color: #007bff;
+  }
+header {
+  display: flex;
+  justify-content: center; /* Modifica: Centra gli elementi orizzontalmente */
+  align-items: center;
+  padding: 1rem;
+  background-color: #f3f3f3;
 }
