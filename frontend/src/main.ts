@@ -5,7 +5,6 @@ import axios from "axios"
 import "./style.css"
 import App from "./App.vue"
 import Film from "./pages/Film.vue"
-import Home from "./pages/Home.vue"
 import Login from "./pages/Login.vue"
 import Noleggi from "./pages/Noleggi.vue"
 import NotFound from "./pages/NotFound.vue"
@@ -14,7 +13,10 @@ import Register from "./pages/Register.vue"
 const router: Router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "/", component: Home },
+    {
+      path: "/",
+      redirect: "/login", // Reindirizza la root a /login
+    },
     {
       path: "/login",
       component: Login,
@@ -26,7 +28,7 @@ const router: Router = createRouter({
       meta: { requireLogout: true }, // Segna che la rotta richiede il logout
     },
     // Ipotetica rotta che richiede il login
-     {
+    {
       path: "/film",
       component: Film,
       meta: { requireLogin: true },
