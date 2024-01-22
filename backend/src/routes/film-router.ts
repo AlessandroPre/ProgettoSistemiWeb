@@ -4,8 +4,9 @@ import * as filmController from "../controllers/film-controller"
 const router: Router = Router()
 
 router.get("/api/film", filmController.allFilms)
-router.get("/api/film/autore/:genre", filmController.filmFromGenre)
-router.get("/api/film/addFilm", filmController.addFilm)
-router.get("/api/film/deleteFilm", filmController.deleteFilm)
+router.get("/api/registi", filmController.allDirector)
+router.post("/api/film", filmController.addFilm);
+router.put("/api/film/:idfilm", filmController.updateFilm)
+router.delete("/api/film/:idfilm", filmController.deleteFilm)
 
 export default router
