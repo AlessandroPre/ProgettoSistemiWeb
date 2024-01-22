@@ -1,12 +1,11 @@
 import express, { Express } from "express"
 import cors from 'cors'
-import filmRouter from "./routes/film-router"
-import registiRouter from "./routes/registi-router"
-import noleggiRouter from "./routes/noleggi-router"
 import history from "connect-history-api-fallback"
-//parte di autenticazione
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
+
+import filmRouter from "./routes/film-router"
+import noleggiRouter from "./routes/noleggi-router"
 import authRouter from "./routes/auth-router"
 
 const app: Express = express()
@@ -14,15 +13,15 @@ const port: number = 3000
 
 app.use(history())
 app.use(express.static("public"))
-app.use(express.static("dist-frontend"))
+//app.use(express.static("dist-frontend"))
 
 app.use(cors())
+app.use(bodyParser.json())
 app.use(filmRouter)
-app.use(registiRouter)
 app.use(noleggiRouter)
 
 //autenticazione
-app.use(bodyParser.json())
+
 app.use(cookieParser())
 app.use(authRouter)
 
