@@ -25,7 +25,7 @@ export default defineComponent({
 
 <template>
   <header class="flex items-center p-6">
-    <RouterLink to="/" class="text-blue-500 font-bold">Vuepost</RouterLink>
+   <!-- <RouterLink to="/" class="text-blue-500 font-bold">Ultimi film</RouterLink>-->
     <div class="grow flex justify-end items-center gap-3">
       <UserInfo v-if="user" :user="user" />
       <template v-else>
