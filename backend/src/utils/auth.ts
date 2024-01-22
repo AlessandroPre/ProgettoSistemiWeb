@@ -1,3 +1,4 @@
+import { compareSync } from "bcrypt"
 import { Request, Response } from "express"
 import jwt from "jsonwebtoken"
 
@@ -23,6 +24,7 @@ export const setAccessToken = (req: Request, res: Response, user: any) => {
     maxAge: 86400000, // 1 giorno in millisecondi --> durata access token
     httpOnly: true,
     sameSite: true
+    //secure: true
   })
 }
 
@@ -32,14 +34,16 @@ export const setAccessToken = (req: Request, res: Response, user: any) => {
  */
 export const decodeAccessToken = (req: Request, res: Response) => {
   // Ottiene il cookie dell'access token
-  const accessToken = req.cookies[COOKIE_NAME]
+  //console.log(req.cookies)
+  const accessToken = req.cookies && req.cookies[COOKIE_NAME]
+  //console.log(accessToken)
   // Restituisce i dati dell'utente contenuti nell'access token, oppure null se il token è mancante o invalido
   if (!accessToken) return null
   try {
     const user = jwt.verify(accessToken, JWT_SECRET) as User
     return user
   } catch {
-    return null //se decodifica non va a buon fine da utente vuoto
+    return null
   }
 }
 
