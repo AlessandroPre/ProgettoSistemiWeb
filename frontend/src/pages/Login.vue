@@ -1,32 +1,38 @@
 <script lang="ts">
-import axios from "axios"
-import { defineComponent } from "vue"
+import axios from "axios";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   data() {
     return {
       username: "",
       password: "",
-    }
+    };
   },
   methods: {
     async onSubmit() {
       try {
-        await axios.post("/api/auth/login", {
+        // Invia la richiesta al server, passando il nome utente e la password
+        const response = await axios.post("/api/auth/login", {
           username: this.username,
           password: this.password,
-        })
-        window.location.href = "/"
+        });
+
+        // Salva il token nel localStorage o nel sessionStorage
+        localStorage.setItem("token", response.data);
+
+        // Reindirizza l'utente alla pagina desiderata
+        window.location.href = "/film";
       } catch (e: any) {
         if (e.response) {
-          alert(`${e.response.status} - ${e.response.statusText}\n${e.response.data}`)
+          alert(`${e.response.status} - ${e.response.statusText}\n${e.response.data}`);
         } else {
-          alert(e.message)
+          alert(e.message);
         }
       }
     },
   },
-})
+});
 </script>
 
 <template>
